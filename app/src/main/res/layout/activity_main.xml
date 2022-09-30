@@ -6,27 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editTextGuess"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:hint="Touch to write"
-        android:inputType="number"
+    <LinearLayout
+        android:id="@+id/LinearLayout"
+        android:layout_width="408dp"
+        android:layout_height="729dp"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="top"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="-1dp">
 
-    <Button
-        android:id="@+id/buttonCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Check"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextGuess" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200px" />
+
+        <EditText
+            android:id="@+id/editTextGuess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Touch to write"
+            android:inputType="number"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/buttonCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100px" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="156dp"
+            android:layout_height="26dp"
+            android:text="INPUTS"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/inputsBoard"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:fadeScrollbars="false"
+            android:isScrollContainer="true"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="always"
+            android:scrollY="0px"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:verticalScrollbarPosition="right"
+            android:visibility="visible" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
