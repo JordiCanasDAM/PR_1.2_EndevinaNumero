@@ -3,6 +3,7 @@ package com.example.pr_12_endevinanumero;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    int tries = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         //Variables
         Random rng = new Random();
         int objective = rng.nextInt(99)+1;
-        final int[] tries = {0};
         Log.i("INFO","Objective: "+ objective );
 
         //COMPONENTS
@@ -41,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (guess.getText().toString().isEmpty() == false) {
-                    tries[0] += 1;
-                    Log.i("INFO", "Tries: " + tries[0]);
+                    tries += 1;
+                    Log.i("INFO", "Tries: " + tries);
                     if (Integer.parseInt(guess.getText().toString()) < objective) {
                         Log.i("INFO", "Smaller than obj");
                         Toast.makeText(getBaseContext(), "El nombre és major", Toast.LENGTH_SHORT).show();
@@ -61,17 +62,24 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Log.i("INFO","Si");
+                                Intent intent = new Intent(MainActivity.this, HighScore.class);
+                                finish();
+                                intent.putExtra("NewScore",tries);
+                                startActivity(intent);
                             }
                         });
                         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Log.i("INFO","No");
+                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                                finish();
+                                startActivity(intent);
                             }
                         });
                         alert.create().show();
                     }
-                    inputsBoard.setText(inputsBoard.getText().toString()+"Intent: "+tries[0]+") Numero: "+guess.getText().toString()+"\n");
+                    inputsBoard.setText(inputsBoard.getText().toString()+"Intent: "+tries+") Numero: "+guess.getText().toString()+"\n");
                 }
             }//onClick method
         });//onClickListener
