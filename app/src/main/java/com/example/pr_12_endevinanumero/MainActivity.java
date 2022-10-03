@@ -1,6 +1,7 @@
 package com.example.pr_12_endevinanumero;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,22 +40,39 @@ public class MainActivity extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tries[0] += 1;
-                Log.i("INFO","Tries: " + tries[0]);
-                if (Integer.parseInt(guess.getText().toString())<objective) {
-                    Log.i("INFO", "Smaller than obj");
-                    Toast.makeText(getBaseContext(),"El nombre és major",Toast.LENGTH_SHORT).show();
+                if (guess.getText().toString().isEmpty() == false) {
+                    tries[0] += 1;
+                    Log.i("INFO", "Tries: " + tries[0]);
+                    if (Integer.parseInt(guess.getText().toString()) < objective) {
+                        Log.i("INFO", "Smaller than obj");
+                        Toast.makeText(getBaseContext(), "El nombre és major", Toast.LENGTH_SHORT).show();
+                    }
+                    if (Integer.parseInt(guess.getText().toString()) > objective) {
+                        Log.i("INFO", "Greater than obj");
+                        Toast.makeText(getBaseContext(), "El nombre és menor", Toast.LENGTH_SHORT).show();
+                    }
+                    if (objective == Integer.parseInt(guess.getText().toString())) {
+                        Log.i("INFO", "WINNER");
+                        Toast.makeText(getBaseContext(), "Ho has endevinat!", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                        alert.setTitle("VICTORIA");
+                        alert.setMessage("Vols registrar la teva victòria a la taula de rècords?");
+                        alert.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.i("INFO","Si");
+                            }
+                        });
+                        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.i("INFO","No");
+                            }
+                        });
+                        alert.create().show();
+                    }
+                    inputsBoard.setText(inputsBoard.getText().toString()+"Intent: "+tries[0]+") Numero: "+guess.getText().toString()+"\n");
                 }
-                if (Integer.parseInt(guess.getText().toString())>objective) {
-                    Log.i("INFO", "Greater than obj");
-                    Toast.makeText(getBaseContext(),"El nombre és menor",Toast.LENGTH_SHORT).show();
-                }
-                if (objective==Integer.parseInt(guess.getText().toString())){
-                    Log.i("INFO","WINNER");
-                    Toast.makeText(getBaseContext(),"Ho has endevinat!",Toast.LENGTH_SHORT).show();
-
-                }
-                inputsBoard.setText(inputsBoard.getText().toString()+"Intent: "+tries[0]+") Numero:"+guess.getText().toString()+"\n");
             }//onClick method
         });//onClickListener
     }
