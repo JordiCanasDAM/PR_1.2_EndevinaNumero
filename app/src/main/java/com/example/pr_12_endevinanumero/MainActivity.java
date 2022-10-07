@@ -17,10 +17,12 @@ import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     int tries = 0;
+    static ArrayList<String[]> highScores = new ArrayList<String[]>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (guess.getText().toString().isEmpty() == false) {
+                if (!guess.getText().toString().isEmpty()) {
                     tries += 1;
                     Log.i("INFO", "Tries: " + tries);
                     if (Integer.parseInt(guess.getText().toString()) < objective) {
@@ -62,10 +64,36 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Log.i("INFO","Si");
-                                Intent intent = new Intent(MainActivity.this, HighScore.class);
-                                finish();
-                                intent.putExtra("NewScore",tries);
-                                startActivity(intent);
+                                //Inserció a records
+                                EditText name = new EditText(MainActivity.this);
+                                alert.setTitle("Registre a la taula de rècords");
+                                alert.setMessage("Escriu el teu nom:");
+                                alert.setPositiveButton("Registrar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if(name.length()>0) {
+                                            //Guardat de record
+                                            String[] record = new String[2];
+                                            record[0] = String.valueOf(tries);
+                                            record[1] = name.getText().toString();
+                                            highScores.add(record);
+                                            Log.i("Info","Registrat");
+                                            //Canvi de pantalla
+                                            Intent intent = new Intent(MainActivity.this, HighScore.class);
+                                            finish();
+                                            intent.putExtra("Scores", highScores);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                });
+                                alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                                alert.setView(name);
+                                alert.create().show();
                             }
                         });
                         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
