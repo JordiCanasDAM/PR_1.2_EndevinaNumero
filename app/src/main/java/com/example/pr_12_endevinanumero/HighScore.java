@@ -15,6 +15,7 @@ public class HighScore extends AppCompatActivity {
 
         //COMPONENTS
         TextView scores = findViewById(R.id.textView3);
+        for (String[] a : MainActivity.highScores){scores.setText(a[0] + ":" + a[1]);};
 
     }
 }
